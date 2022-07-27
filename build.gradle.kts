@@ -3,6 +3,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 val kmongo_version: String by project
 val koin_version: String by project
+val commons_codec_version: String by project
 
 plugins {
     application
@@ -48,6 +49,8 @@ dependencies {
     implementation("io.insert-koin:koin-core:$koin_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
+
+    implementation("commons-codec:commons-codec:$commons_codec_version")
 
     //test dependency
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
