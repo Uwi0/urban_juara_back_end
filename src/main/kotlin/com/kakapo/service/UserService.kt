@@ -10,6 +10,10 @@ class UserService(
     private val hashingService: HashingService
 ) {
 
+    suspend fun doesUserWithEmailAlreadyExist(email: String): Boolean{
+        return userRepository.getUserByEmail(email) != null
+    }
+
     suspend fun createUserAccount(request: CreateAccountRequest){
         val saltedHash = hashingService.generatedSaltedHash(request.password)
         userRepository.userSignUp(

@@ -22,6 +22,16 @@ fun Route.createUser(
             return@post
         }
 
+        val doesUserAlreadyExist = userService.doesUserWithEmailAlreadyExist(request.email)
+        if (doesUserAlreadyExist){
+            call.respond(
+                BasicApiResponse<Unit>(
+                    successful = false,
+                    message = ApiResponseMessage.USER_ALREADY_EXISTS
+                )
+            )
+        }
+
         when(userService.validateCreateAccountRequest(request)){
             UserService.ValidationEvent.ErrorFieldEmpty -> {
                 call.respond(
