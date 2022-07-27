@@ -1,6 +1,7 @@
 package com.kakapo.plugins
 
 import com.kakapo.routes.createUser
+import com.kakapo.security.hashing.SHA256HashingService
 import com.kakapo.service.UserService
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
@@ -14,6 +15,6 @@ fun Application.configureRouting() {
     val userService: UserService by inject()
 
     routing {
-        createUser(userService)
+        createUser(userService = userService)
     }
 }

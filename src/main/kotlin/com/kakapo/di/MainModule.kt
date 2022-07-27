@@ -2,6 +2,8 @@ package com.kakapo.di
 
 import com.kakapo.data.repository.user.MongoUserRepository
 import com.kakapo.data.repository.user.UserRepository
+import com.kakapo.security.hashing.HashingService
+import com.kakapo.security.hashing.SHA256HashingService
 import com.kakapo.service.UserService
 import com.kakapo.utils.Constants
 import org.koin.dsl.module
@@ -16,5 +18,8 @@ val mainModule = module {
     single<UserRepository> {
         MongoUserRepository(get())
     }
-    single { UserService(get()) }
+    single <HashingService>{
+        SHA256HashingService()
+    }
+    single { UserService(get(), get()) }
 }

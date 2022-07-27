@@ -3,18 +3,21 @@ package com.kakapo.service
 import com.kakapo.data.model.User
 import com.kakapo.data.repository.user.UserRepository
 import com.kakapo.data.request.CreateAccountRequest
+import com.kakapo.security.hashing.HashingService
 
 class UserService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val hashingService: HashingService
 ) {
 
     suspend fun createUserAccount(request: CreateAccountRequest){
+        val saltedHash = hashingService.generatedSaltedHash(request.password)
         userRepository.userSignUp(
             User(
                 email = request.email,
                 username = request.username,
-                password = request.password,
-                salt = "123456"
+                password = saltedHash.hash,
+                salt = saltedHash.salt
             )
         )
     }
