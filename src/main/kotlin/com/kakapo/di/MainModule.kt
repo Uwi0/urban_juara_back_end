@@ -4,6 +4,8 @@ import com.kakapo.data.repository.user.MongoUserRepository
 import com.kakapo.data.repository.user.UserRepository
 import com.kakapo.security.hashing.HashingService
 import com.kakapo.security.hashing.SHA256HashingService
+import com.kakapo.security.token.JwtTokenService
+import com.kakapo.security.token.TokenService
 import com.kakapo.service.UserService
 import com.kakapo.utils.Constants
 import org.koin.dsl.module
@@ -21,5 +23,10 @@ val mainModule = module {
     single <HashingService>{
         SHA256HashingService()
     }
-    single { UserService(get(), get()) }
+    single<TokenService> {
+        JwtTokenService()
+    }
+
+    single { UserService(get(), get(), get()) }
+
 }
